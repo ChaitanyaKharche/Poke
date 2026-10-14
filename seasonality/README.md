@@ -35,3 +35,19 @@ python3 sealed_analysis.py data 2026-10-14          # sealed products since rele
 - **Jan to Apr vs Sep to Dec is close to a coin flip once the trend is removed.** It beat Sep to Dec within the same year in 3 of 5 years (4 of 5 for vintage, 3 of 4 for PSA 10). Raw numbers make Jan to Apr look better every year, but that is the 2023 to 2026 bull market accelerating.
 - **The mild soft stretch is Jun to Nov.** July and September ran below trend in 5 of 6 years. January ran above trend in 4 of 5 years. Treat this as a lean: 12 months tested over 5 to 6 years will produce a couple of consistent-looking months by chance.
 - **Release decay is the strong, reliable pattern.** Cards worth $5+ in Pitch Black fell a median 34% by day 60, Chaos Rising 60% by day 120, Perfect Order 51% by day 180. By day 120, every chase card in Chaos Rising and Perfect Order was below its early price.
+
+## Recent sets: singles vs sealed (Oct 14 2026)
+
+Change since release week (Ascended Heroes and Perfect Order: since day 78 and day 22, when the history window starts). Singles = sum of every card's Near Mint price. Sealed = median single-unit product (cases and displays skipped).
+
+| Set | Released | #1 card's share of set value | Singles | #1 card | Sealed (median) | Sealed products up |
+|---|---|--:|--:|--:|--:|--:|
+| 30th Celebration | Sep 16 | 12% | -46% (in 3 weeks) | Mew ex SIR -44% | -18% | 10 of 37 |
+| Pitch Black | Jul 17 | 29% | -48% | Mega Darkrai ex SIR -55% | -15% | 2 of 15 |
+| Chaos Rising | May 22 | 34% | -66% | Mega Greninja ex SIR -73% | -24% | 0 of 13 |
+| Perfect Order | Mar 27 | 19% | -51% | Mega Zygarde ex MHR -47% | -7% | 5 of 15 |
+| Ascended Heroes | Jan 30 | 18% | -38% | Mega Gengar ex SIR -35% | +14% | 14 of 21 |
+
+- Singles fell 38 to 66% in every set; sealed fell much less, and only Ascended Heroes sealed is clearly up.
+- Ascended Heroes singles are falling faster lately: -13% from Apr 18 to Aug 15, then -28% from Aug 15 to Oct 14. All 52 cards worth $5+ fell over the last 30 days (median -24%).
+- Sets that lean on one chase card (Chaos Rising, Pitch Black) fell hardest, in singles and in sealed. Five sets is a small sample.
