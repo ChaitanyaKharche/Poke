@@ -1,5 +1,5 @@
 {
- "runAt": "2026-10-14T18:36:03.999Z",
+ "runAt": "2026-10-14T20:06:11.209Z",
  "profile": "7f99da14-80b0-4914-99c7-44162fab4d04",
  "collection": "Main",
  "raw": [
@@ -17462,43 +17462,43 @@
      "variants": {
       "Holofoil": {
        "Near Mint": {
-        "price": 6,
+        "price": 5.95,
         "listings": null,
-        "priceString": "$6.00",
-        "lastUpdated": "2026-10-13T00:00:00.000Z"
+        "priceString": "$5.95",
+        "lastUpdated": "2026-10-14T00:00:00.000Z"
        },
        "Lightly Played": {
         "price": 7.5,
         "listings": null,
         "priceString": "$7.50",
-        "lastUpdated": "2026-10-13T00:00:00.000Z"
+        "lastUpdated": "2026-10-14T00:00:00.000Z"
        },
        "Damaged": {
         "price": 3,
         "listings": null,
         "priceString": "$3.00",
-        "lastUpdated": "2026-10-13T00:00:00.000Z"
+        "lastUpdated": "2026-10-14T00:00:00.000Z"
        }
       }
      },
      "conditions": {
       "Near Mint": {
-       "price": 6,
+       "price": 5.95,
        "listings": null,
-       "priceString": "$6.00",
-       "lastUpdated": "2026-10-13T00:00:00.000Z"
+       "priceString": "$5.95",
+       "lastUpdated": "2026-10-14T00:00:00.000Z"
       },
       "Lightly Played": {
        "price": 7.5,
        "listings": null,
        "priceString": "$7.50",
-       "lastUpdated": "2026-10-13T00:00:00.000Z"
+       "lastUpdated": "2026-10-14T00:00:00.000Z"
       },
       "Damaged": {
        "price": 3,
        "listings": null,
        "priceString": "$3.00",
-       "lastUpdated": "2026-10-13T00:00:00.000Z"
+       "lastUpdated": "2026-10-14T00:00:00.000Z"
       }
      }
     },
@@ -17598,13 +17598,18 @@
          "date": "2026-10-13T00:00:00.000Z",
          "market": 6,
          "volume": null
+        },
+        {
+         "date": "2026-10-14T00:00:00.000Z",
+         "market": 5.95,
+         "volume": 1
         }
        ],
-       "dataPoints": 13,
-       "latestPrice": 6,
-       "latestDate": "2026-10-13T00:00:00.000Z",
+       "dataPoints": 14,
+       "latestPrice": 5.95,
+       "latestDate": "2026-10-14T00:00:00.000Z",
        "priceRange": {
-        "min": 6,
+        "min": 5.95,
         "max": 7.11
        },
        "suspectStreak": 0
@@ -17675,11 +17680,16 @@
          "date": "2026-10-13T00:00:00.000Z",
          "market": 7.5,
          "volume": null
+        },
+        {
+         "date": "2026-10-14T00:00:00.000Z",
+         "market": 7.5,
+         "volume": null
         }
        ],
-       "dataPoints": 13,
+       "dataPoints": 14,
        "latestPrice": 7.5,
-       "latestDate": "2026-10-13T00:00:00.000Z",
+       "latestDate": "2026-10-14T00:00:00.000Z",
        "priceRange": {
         "min": 7.5,
         "max": 7.5
@@ -17722,11 +17732,16 @@
          "date": "2026-10-13T00:00:00.000Z",
          "market": 3,
          "volume": null
+        },
+        {
+         "date": "2026-10-14T00:00:00.000Z",
+         "market": 3,
+         "volume": null
         }
        ],
-       "dataPoints": 7,
+       "dataPoints": 8,
        "latestPrice": 3,
-       "latestDate": "2026-10-13T00:00:00.000Z",
+       "latestDate": "2026-10-14T00:00:00.000Z",
        "priceRange": {
         "min": 3,
         "max": 3
@@ -17807,13 +17822,18 @@
           "date": "2026-10-13T00:00:00.000Z",
           "market": 6,
           "volume": null
+         },
+         {
+          "date": "2026-10-14T00:00:00.000Z",
+          "market": 5.95,
+          "volume": 1
          }
         ],
-        "dataPoints": 13,
-        "latestPrice": 6,
-        "latestDate": "2026-10-13T00:00:00.000Z",
+        "dataPoints": 14,
+        "latestPrice": 5.95,
+        "latestDate": "2026-10-14T00:00:00.000Z",
         "priceRange": {
-         "min": 6,
+         "min": 5.95,
          "max": 7.11
         },
         "suspectStreak": 0
@@ -17884,11 +17904,16 @@
           "date": "2026-10-13T00:00:00.000Z",
           "market": 7.5,
           "volume": null
+         },
+         {
+          "date": "2026-10-14T00:00:00.000Z",
+          "market": 7.5,
+          "volume": null
          }
         ],
-        "dataPoints": 13,
+        "dataPoints": 14,
         "latestPrice": 7.5,
-        "latestDate": "2026-10-13T00:00:00.000Z",
+        "latestDate": "2026-10-14T00:00:00.000Z",
         "priceRange": {
          "min": 7.5,
          "max": 7.5
@@ -17931,11 +17956,16 @@
           "date": "2026-10-13T00:00:00.000Z",
           "market": 3,
           "volume": null
+         },
+         {
+          "date": "2026-10-14T00:00:00.000Z",
+          "market": 3,
+          "volume": null
          }
         ],
-        "dataPoints": 7,
+        "dataPoints": 8,
         "latestPrice": 3,
-        "latestDate": "2026-10-13T00:00:00.000Z",
+        "latestDate": "2026-10-14T00:00:00.000Z",
         "priceRange": {
          "min": 3,
          "max": 3
@@ -17944,8 +17974,8 @@
        }
       }
      },
-     "totalDataPoints": 33,
-     "lastUpdated": "2026-10-13T23:25:23.266Z"
+     "totalDataPoints": 36,
+     "lastUpdated": "2026-10-14T18:54:57.543Z"
     }
    }
   },
@@ -20290,31 +20320,31 @@
      "variants": {
       "Holofoil": {
        "Near Mint": {
-        "price": 2.99,
+        "price": 2.93,
         "listings": null,
-        "priceString": "$2.99",
-        "lastUpdated": "2026-10-13T00:00:00.000Z"
+        "priceString": "$2.93",
+        "lastUpdated": "2026-10-14T00:00:00.000Z"
        },
        "Lightly Played": {
         "price": 3.67,
         "listings": null,
         "priceString": "$3.67",
-        "lastUpdated": "2026-10-13T00:00:00.000Z"
+        "lastUpdated": "2026-10-14T00:00:00.000Z"
        }
       }
      },
      "conditions": {
       "Near Mint": {
-       "price": 2.99,
+       "price": 2.93,
        "listings": null,
-       "priceString": "$2.99",
-       "lastUpdated": "2026-10-13T00:00:00.000Z"
+       "priceString": "$2.93",
+       "lastUpdated": "2026-10-14T00:00:00.000Z"
       },
       "Lightly Played": {
        "price": 3.67,
        "listings": null,
        "priceString": "$3.67",
-       "lastUpdated": "2026-10-13T00:00:00.000Z"
+       "lastUpdated": "2026-10-14T00:00:00.000Z"
       }
      }
     },
@@ -20415,15 +20445,21 @@
         },
         {
          "date": "2026-10-13T00:00:00.000Z",
-         "market": 2.99,
+         "market": 2.9,
+         "volume": 1,
+         "marketRaw": 2.99
+        },
+        {
+         "date": "2026-10-14T00:00:00.000Z",
+         "market": 2.93,
          "volume": 1
         }
        ],
-       "dataPoints": 13,
-       "latestPrice": 2.99,
-       "latestDate": "2026-10-13T00:00:00.000Z",
+       "dataPoints": 14,
+       "latestPrice": 2.93,
+       "latestDate": "2026-10-14T00:00:00.000Z",
        "priceRange": {
-        "min": 2.99,
+        "min": 2.9,
         "max": 3.38
        },
        "suspectStreak": 0
@@ -20495,11 +20531,16 @@
          "date": "2026-10-13T00:00:00.000Z",
          "market": 3.67,
          "volume": null
+        },
+        {
+         "date": "2026-10-14T00:00:00.000Z",
+         "market": 3.67,
+         "volume": null
         }
        ],
-       "dataPoints": 13,
+       "dataPoints": 14,
        "latestPrice": 3.67,
-       "latestDate": "2026-10-13T00:00:00.000Z",
+       "latestDate": "2026-10-14T00:00:00.000Z",
        "priceRange": {
         "min": 3.67,
         "max": 4.21
@@ -20582,15 +20623,21 @@
          },
          {
           "date": "2026-10-13T00:00:00.000Z",
-          "market": 2.99,
+          "market": 2.9,
+          "volume": 1,
+          "marketRaw": 2.99
+         },
+         {
+          "date": "2026-10-14T00:00:00.000Z",
+          "market": 2.93,
           "volume": 1
          }
         ],
-        "dataPoints": 13,
-        "latestPrice": 2.99,
-        "latestDate": "2026-10-13T00:00:00.000Z",
+        "dataPoints": 14,
+        "latestPrice": 2.93,
+        "latestDate": "2026-10-14T00:00:00.000Z",
         "priceRange": {
-         "min": 2.99,
+         "min": 2.9,
          "max": 3.38
         },
         "suspectStreak": 0
@@ -20662,11 +20709,16 @@
           "date": "2026-10-13T00:00:00.000Z",
           "market": 3.67,
           "volume": null
+         },
+         {
+          "date": "2026-10-14T00:00:00.000Z",
+          "market": 3.67,
+          "volume": null
          }
         ],
-        "dataPoints": 13,
+        "dataPoints": 14,
         "latestPrice": 3.67,
-        "latestDate": "2026-10-13T00:00:00.000Z",
+        "latestDate": "2026-10-14T00:00:00.000Z",
         "priceRange": {
          "min": 3.67,
          "max": 4.21
@@ -20675,8 +20727,8 @@
        }
       }
      },
-     "totalDataPoints": 26,
-     "lastUpdated": "2026-10-13T23:34:03.715Z"
+     "totalDataPoints": 28,
+     "lastUpdated": "2026-10-14T19:07:05.959Z"
     }
    }
   },
@@ -21702,13 +21754,13 @@
         "price": 2.55,
         "listings": null,
         "priceString": "$2.55",
-        "lastUpdated": "2026-10-13T00:00:00.000Z"
+        "lastUpdated": "2026-10-14T00:00:00.000Z"
        },
        "Lightly Played": {
-        "price": 2.98,
+        "price": 2.97,
         "listings": null,
-        "priceString": "$2.98",
-        "lastUpdated": "2026-10-13T00:00:00.000Z"
+        "priceString": "$2.97",
+        "lastUpdated": "2026-10-14T00:00:00.000Z"
        }
       }
      },
@@ -21717,13 +21769,13 @@
        "price": 2.55,
        "listings": null,
        "priceString": "$2.55",
-       "lastUpdated": "2026-10-13T00:00:00.000Z"
+       "lastUpdated": "2026-10-14T00:00:00.000Z"
       },
       "Lightly Played": {
-       "price": 2.98,
+       "price": 2.97,
        "listings": null,
-       "priceString": "$2.98",
-       "lastUpdated": "2026-10-13T00:00:00.000Z"
+       "priceString": "$2.97",
+       "lastUpdated": "2026-10-14T00:00:00.000Z"
       }
      }
     },
@@ -21824,11 +21876,16 @@
          "date": "2026-10-13T00:00:00.000Z",
          "market": 2.55,
          "volume": 1
+        },
+        {
+         "date": "2026-10-14T00:00:00.000Z",
+         "market": 2.55,
+         "volume": 4
         }
        ],
-       "dataPoints": 13,
+       "dataPoints": 14,
        "latestPrice": 2.55,
-       "latestDate": "2026-10-13T00:00:00.000Z",
+       "latestDate": "2026-10-14T00:00:00.000Z",
        "priceRange": {
         "min": 2.53,
         "max": 2.76
@@ -21902,13 +21959,19 @@
         },
         {
          "date": "2026-10-13T00:00:00.000Z",
-         "market": 2.98,
-         "volume": 1
+         "market": 2.97,
+         "volume": 1,
+         "marketRaw": 2.98
+        },
+        {
+         "date": "2026-10-14T00:00:00.000Z",
+         "market": 2.97,
+         "volume": null
         }
        ],
-       "dataPoints": 13,
-       "latestPrice": 2.98,
-       "latestDate": "2026-10-13T00:00:00.000Z",
+       "dataPoints": 14,
+       "latestPrice": 2.97,
+       "latestDate": "2026-10-14T00:00:00.000Z",
        "priceRange": {
         "min": 2.96,
         "max": 3.05
@@ -21991,11 +22054,16 @@
           "date": "2026-10-13T00:00:00.000Z",
           "market": 2.55,
           "volume": 1
+         },
+         {
+          "date": "2026-10-14T00:00:00.000Z",
+          "market": 2.55,
+          "volume": 4
          }
         ],
-        "dataPoints": 13,
+        "dataPoints": 14,
         "latestPrice": 2.55,
-        "latestDate": "2026-10-13T00:00:00.000Z",
+        "latestDate": "2026-10-14T00:00:00.000Z",
         "priceRange": {
          "min": 2.53,
          "max": 2.76
@@ -22069,13 +22137,19 @@
          },
          {
           "date": "2026-10-13T00:00:00.000Z",
-          "market": 2.98,
-          "volume": 1
+          "market": 2.97,
+          "volume": 1,
+          "marketRaw": 2.98
+         },
+         {
+          "date": "2026-10-14T00:00:00.000Z",
+          "market": 2.97,
+          "volume": null
          }
         ],
-        "dataPoints": 13,
-        "latestPrice": 2.98,
-        "latestDate": "2026-10-13T00:00:00.000Z",
+        "dataPoints": 14,
+        "latestPrice": 2.97,
+        "latestDate": "2026-10-14T00:00:00.000Z",
         "priceRange": {
          "min": 2.96,
          "max": 3.05
@@ -22084,8 +22158,8 @@
        }
       }
      },
-     "totalDataPoints": 26,
-     "lastUpdated": "2026-10-13T23:36:25.880Z"
+     "totalDataPoints": 28,
+     "lastUpdated": "2026-10-14T19:08:44.340Z"
     }
    }
   },
@@ -22146,8 +22220,8 @@
     "prices": {
      "market": 2.51,
      "low": 1.89,
-     "sellers": 496,
-     "listings": 518,
+     "sellers": 528,
+     "listings": 553,
      "recentSales": 0,
      "primaryPrinting": "Holofoil",
      "lastUpdated": "2026-10-14T12:00:46.405Z",
@@ -22227,7 +22301,7 @@
     "dataCompleteness": "complete",
     "lastScrapedAt": "2026-10-14T12:00:46.405Z",
     "createdAt": "2026-01-31T11:06:09.180Z",
-    "updatedAt": "2026-10-14T12:01:21.047Z",
+    "updatedAt": "2026-10-14T20:00:50.228Z",
     "variants": {
      "Holofoil": {
       "printing": "Holofoil",
@@ -23013,8 +23087,8 @@
     "prices": {
      "market": 1.71,
      "low": 1,
-     "sellers": 446,
-     "listings": 457,
+     "sellers": 441,
+     "listings": 452,
      "recentSales": 0,
      "primaryPrinting": "Holofoil",
      "lastUpdated": "2026-10-14T12:00:46.406Z",
@@ -23082,7 +23156,7 @@
     "dataCompleteness": "complete",
     "lastScrapedAt": "2026-10-14T12:00:46.406Z",
     "createdAt": "2026-01-31T11:06:15.721Z",
-    "updatedAt": "2026-10-14T12:02:22.714Z",
+    "updatedAt": "2026-10-14T20:02:37.402Z",
     "variants": {
      "Holofoil": {
       "printing": "Holofoil",

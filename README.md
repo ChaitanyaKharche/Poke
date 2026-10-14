@@ -31,7 +31,9 @@ Output goes to `reports/<date>/`:
 
 See [`reports/2026-10-14/report.md`](reports/2026-10-14/report.md) for the full table.
 
-**Overall, Collectr is accurate. For raw cards, its total ($883.25) is within $0.34 of TCGplayer's ($883.59).** The median per-card gap is 1.1%. 25 of 27 raw cards are within 5%, and the total absolute error is $14.92 (1.7% of value).
+**For raw cards, Collectr's total ($883.25) is within $0.23 of TCGplayer's ($883.48), but that is partly errors canceling out.** The median per-card gap is 1.2%. 25 of 27 raw cards are within 5%, and the per-card errors add up to $15.03 (1.7% of value). The two biggest misses (Mega Darkrai +$4.36, Mew JP -$4.32) almost exactly offset each other. Without Mew JP, Collectr reads about $4 high, because most cards drifted down during the lag.
+
+With the Deoxys PSA 9 at its recent eBay price ($60), the Main folder is worth about **$943.48** on TCGplayer and eBay prices, vs Collectr's $933.90.
 
 Collectr's price is TCGplayer's market price, just delayed:
 
@@ -46,6 +48,8 @@ Specific problems:
 | Mew 183/172 (JP, VSTAR Universe) | Collectr uses its own product 10009707, not the TCGplayer listing 571721 | Collectr $44.18 vs TCGplayer $48.50 (-8.9%), the largest % miss |
 | Mega Darkrai ex 114/081 (JP) | The 2-day lag hit while the price was falling ($186.65 → $181.54 → $177.18) | Collectr +$4.36 (+2.5%), the largest $ miss |
 | Zapdos 15/62 (Fossil) | Priced as **Unlimited** Holo ($38.69, exact). TCGplayer's headline price ($198.67) is **1st Edition** | Correct if your card is Unlimited. If it has the 1st Edition stamp, it is undervalued by about $160 |
-| Deoxys VSTAR GG46 (graded, grade_id 11) | The grade is hidden on the public showcase. Collectr shows $50.65 | eBay medians: PSA 9 $50 (last 2 weeks ~$60), BGS 9 $55, PSA 10 $186. Fine if it's a 9; undervalued by about $135 if it's a PSA 10 |
+| Deoxys VSTAR GG46 (PSA 9) | Collectr shows $50.65, close to the all-time PSA 9 median ($50). Recent PSA 9 sales are about $60 | Undervalued by $9.35 (-15.6%) against recent sales |
 
-The API checks out against TCGplayer's own live endpoint: median gap 0.48%, with the differences explained by when each was snapshotted.
+The API checks out against TCGplayer's own live endpoint: median gap 0.27%, with the differences explained by when each was snapshotted.
+
+The report was produced with `npm run compare -- --grade 477059=psa9`.
