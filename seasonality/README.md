@@ -21,6 +21,14 @@ python3 decay.py data                       # post-release decay
 python3 make_page.py data seasonality.html  # expects data/pc/season_used.json and data/api/decay.json
 ```
 
+Recent sets, singles vs sealed:
+
+```bash
+API_KEY=... python3 fetch_recent_sets.py data/api   # 30th Celebration, Ascended Heroes singles; sealed for five 2026 sets (~1,700 credits)
+python3 sets_analysis.py data 2026-10-14            # set value, top 10, set minus #1 card, last-30-day breadth
+python3 sealed_analysis.py data 2026-10-14          # sealed products since release week (cases and displays skipped)
+```
+
 ## Findings (Oct 2026)
 
 - **Sept to Dec is not a regular crash.** The basket fell in Sep to Dec in 2 of 5 years (2021 -10.8%, 2023 -3.8%), was flat in 2022, and rose in 2024 (+13.1%) and 2025 (+6.8%).
