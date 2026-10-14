@@ -141,13 +141,18 @@ async function findCard(p, extra) {
   return null;
 }
 
+// Latest price for a printing and condition. Reads priceHistory.variants (needs includeHistory=true),
+// since prices.variants is deprecated. Falls back to the card's Near Mint snapshot.
+function latestPrice(card, printing, cond) {
+  const fromHistory = card.priceHistory?.variants?.[printing]?.[cond]?.latestPrice;
+  if (fromHistory != null) return fromHistory;
+  return cond === 'Near Mint' ? card.variants?.[printing]?.marketPrice ?? null : null;
+}
+
 function variantPrice(card, subType, cond) {
-  const variants = card.prices?.variants || {};
-  const name = variants[subType] ? subType : card.prices?.primaryPrinting;
-  const byCond = variants[name] || {};
-  const key = Object.keys(byCond).find((k) => k.startsWith(cond));
-  const price = key ? byCond[key].price : card.variants?.[name]?.marketPrice;
-  return { variant: name, price: price ?? null, exact: name === subType };
+  const known = card.priceHistory?.variants?.[subType] || card.variants?.[subType];
+  const name = known ? subType : card.prices?.primaryPrinting;
+  return { variant: name, price: latestPrice(card, name, cond), exact: name === subType };
 }
 
 function history(card, variant, cond) {
@@ -248,9 +253,12 @@ async function main() {
       const notes = [];
       if (found.remapped) notes.push(`Collectr uses its own ID ${p.product_id}; TCGplayer listing is ${tcgId}`);
       if (!vp.exact) notes.push(`printing "${p.product_sub_type}" not on TCGplayer, used ${vp.variant}`);
-      const others = (card.printingsAvailable || []).filter((v) => v !== vp.variant && card.variants?.[v]?.marketPrice != null);
+      const others = (card.printingsAvailable || [])
+        .filter((v) => v !== vp.variant)
+        .map((v) => [v, latestPrice(card, v, 'Near Mint')])
+        .filter(([, price]) => price != null);
       if (others.length) {
-        notes.push(`other printings: ${others.map((v) => `${v} $${round2(card.variants[v].marketPrice)}`).join(', ')}`);
+        notes.push(`other printings: ${others.map(([v, price]) => `${v} $${round2(price)}`).join(', ')}`);
       }
       row.note = notes.join('; ');
     }
