@@ -5,8 +5,10 @@ prices, sales per week and price trend from eBay graded sales (PokemonPriceTrack
 
 Usage:
     API_KEY=... python3 slabs/scan.py slabs/data/scan.json [--min 5 --max 150]
+    API_KEY=... python3 slabs/scan.py slabs/data/scan_high.json --min 150 --max 700
 
-Cost: 2 credits per card (card + eBay data). About 7,900 cards between $5 and $150 raw.
+Cost: 2 credits per card (card + eBay data). About 7,900 cards between $5 and $150 raw,
+and about 900 more between $150 and $700.
 """
 import argparse
 import json
@@ -21,7 +23,7 @@ from datetime import date, timedelta
 
 API = 'https://www.pokemonpricetracker.com/api/v2'
 GRADES = ['psa10', 'psa9', 'psa8', 'cgc10', 'cgc9_5', 'bgs9_5', 'bgs10', 'tag10', 'ace10']
-WINDOWS = [(5, 10), (10, 20), (20, 40), (40, 80), (80, 150)]
+WINDOWS = [(5, 10), (10, 20), (20, 40), (40, 80), (80, 150), (150, 300), (300, 700)]
 PAGE = 50  # eBay data caps a page at 50 cards
 
 
@@ -59,10 +61,15 @@ def grade_stats(sales, history, today):
         return (sum(v['average'] * v['count'] for _, v in rows) / n, n) if n else (None, 0)
     r_avg, r_n = wavg(recent)
     o_avg, o_n = wavg(older)
+    med30 = None
+    if r_n >= 3:
+        expanded = sorted(v['average'] for _, v in recent for _ in range(v['count']))
+        med30 = round(st.median(expanded), 2)
     smart = (sales.get('smartMarketPrice') or {}).get('price')
     comp = r_avg if r_n >= 3 else smart or sales.get('medianPrice')
     return {
         'comp': round(comp, 2) if comp else None,
+        'med30': med30,
         'n30': r_n,
         'perWeek': round(r_n / 30 * 7, 1),
         'trend': round(r_avg / o_avg - 1, 3) if r_avg and o_avg and r_n >= 2 and o_n >= 3 else None,
@@ -101,7 +108,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('out')
     ap.add_argument('--min', type=float, default=WINDOWS[0][0])
-    ap.add_argument('--max', type=float, default=WINDOWS[-1][1])
+    ap.add_argument('--max', type=float, default=150)
     args = ap.parse_args()
     today = date.today()
     cards = {}

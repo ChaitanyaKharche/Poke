@@ -227,7 +227,7 @@ function verdict(ask, comp, maxOffer, great) {
 function checks(c, key, g, ask) {
   const out = [];
   if (key !== 'raw') {
-    if (g.n30 >= 3) out.push(['ok', `Recent sold comps: ${g.n30} sales in the last 30 days, averaging ${money(g.comp)}.`]);
+    if (g.n30 >= 3) out.push(['ok', `Recent sold comps: ${g.n30} sales in the last 30 days, typically ${money(g.comp)}.`]);
     else if (g.comp) out.push(['wn', `Thin comps: only ${g.n30} sale${g.n30 === 1 ? '' : 's'} in 30 days. The ${money(g.comp)} figure leans on older sales, so check eBay sold listings before paying.`]);
     else out.push(['no', 'No reliable sold comps for this grade. Do not buy without checking eBay sold listings.']);
     if (g.perWeek >= 2) out.push(['ok', `Sells ${g.perWeek} times a week, so it is easy to resell.`]);
@@ -280,14 +280,14 @@ function renderDetail() {
       <div class="inner">
         <div class="chips" role="group" aria-label="Grade">${tabs.map((k) => `<button class="chip" data-g="${k}" aria-pressed="${k === state.grade}">${k === 'raw' ? 'Raw NM' : GRADE_NAMES[k]}</button>`).join('')}</div>
         <div class="stats${g.raw ? ' one' : ''}">
-          <div class="stat"><div class="k">${g.raw ? 'Market price' : 'Recent sales avg'}</div><div class="v">${money(comp)}</div><div class="s">${g.raw ? 'TCGplayer, Near Mint' : g.n30 >= 3 ? `last 30 days, ${money(g.low30)} to ${money(g.high30)}` : 'few recent sales'}</div></div>
+          <div class="stat"><div class="k">${g.raw ? 'Market price' : 'Typical recent sale'}</div><div class="v">${money(comp)}</div><div class="s">${g.raw ? 'TCGplayer, Near Mint' : g.n30 >= 3 ? `30-day avg ${money(g.avg30)}, range ${money(g.low30)} to ${money(g.high30)}` : 'few recent sales'}</div></div>
           ${g.raw ? '' : `<div class="stat"><div class="k">Sales / week</div><div class="v">${g.perWeek}</div><div class="s">${g.n30} in 30 days</div></div>
           <div class="stat"><div class="k">Trend</div><div class="v">${pct(g.trend)}</div><div class="s">30 days vs 60 before</div></div>`}
         </div>
         ${g.last5 && g.last5.length ? `<div class="sales">Last 5 days with sales (average price that day): ${g.last5.map(money).join(' · ')}${g.lastSale ? `. Latest sale ${g.lastSale}` : ''}</div>` : ''}
         <div class="offer">
           <div class="askrow"><label for="ask">Asking price $</label><input id="ask" type="number" inputmode="decimal" min="0" step="1" value="${askVal ?? ''}"></div>
-          ${comp ? `<div class="targets"><span>Open at <b>${money(round5(great))}</b></span><span>Max <b>${money(maxOffer)}</b>${trendCut < 0.85 ? ' (80%, price is falling)' : ' (85%)'}</span><span>Recent avg <b>${money(comp)}</b></span></div>` : ''}
+          ${comp ? `<div class="targets"><span>Open at <b>${money(round5(great))}</b></span><span>Max <b>${money(maxOffer)}</b>${trendCut < 0.85 ? ' (80%, price is falling)' : ' (85%)'}</span><span>Typical sale <b>${money(comp)}</b></span></div>` : ''}
           <div class="verdict ${v.cls}" id="verdict">${esc(v.text)}${v.sub ? `<small>${esc(v.sub)}</small>` : ''}</div>
           <ul class="checks" id="checks">${checks(c, state.grade, g, askVal).map(([k, t]) => `<li><span class="ic ${k}">${k === 'ok' ? '✓' : k === 'wn' ? '!' : '✕'}</span><span>${esc(t)}</span></li>`).join('')}</ul>
         </div>
