@@ -1,0 +1,375 @@
+<title>Card Show Slab Check</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+  /* Layout: one phone column; search on top, the selected card as a slab label, then offer math and checks. */
+  :root {
+    --bg: #f3f4f6;
+    --surface: #ffffff;
+    --ink: #15171c;
+    --ink-2: #4a4f5a;
+    --ink-3: #737986;
+    --line: #dfe2e8;
+    --label-red: #c8102e;
+    --accent: #c8102e;
+    --accent-ink: #ffffff;
+    --good: #18794e;
+    --good-bg: #e3f4ea;
+    --warn: #9a5b00;
+    --warn-bg: #fdf1dc;
+    --bad: #b42318;
+    --bad-bg: #fde7e4;
+    --chip: #eceef2;
+    --label-bg: #ffffff;
+    --label-ink: #15171c;
+    --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+    --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #101216; --surface: #191c22; --ink: #eef0f4; --ink-2: #b9bfcb; --ink-3: #8b92a0; --line: #2a2f38;
+      --label-red: #e2324a; --accent: #ef4058; --accent-ink: #ffffff;
+      --good: #4cc38a; --good-bg: #13261d; --warn: #f0b44c; --warn-bg: #2b2112; --bad: #ff7b6e; --bad-bg: #2d1715; --chip: #232832;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #101216; --surface: #191c22; --ink: #eef0f4; --ink-2: #b9bfcb; --ink-3: #8b92a0; --line: #2a2f38;
+    --label-red: #e2324a; --accent: #ef4058; --accent-ink: #ffffff;
+    --good: #4cc38a; --good-bg: #13261d; --warn: #f0b44c; --warn-bg: #2b2112; --bad: #ff7b6e; --bad-bg: #2d1715; --chip: #232832;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.45; }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+  .wrap { max-width: 720px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 48px; }
+  header.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); margin: 0 calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding: 12px max(16px, env(safe-area-inset-right, 0px)) 12px max(16px, env(safe-area-inset-left, 0px)); display: grid; gap: 10px; }
+  .brand { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+  .brand h1 { font-family: var(--font-display); font-weight: 700; font-size: 24px; letter-spacing: 0.02em; text-transform: uppercase; margin: 0; }
+  .brand h1 b { color: var(--label-red); }
+  .fresh { font-size: 12px; color: var(--ink-3); text-align: right; }
+  .search { position: relative; }
+  .search input { width: 100%; font: inherit; font-size: 17px; padding: 12px 14px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); }
+  .search input:focus { outline: none; border-color: var(--accent); }
+  .budget { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; font-size: 13px; color: var(--ink-2); }
+  .budget label { display: inline-flex; align-items: center; gap: 6px; }
+  .budget input { width: 72px; font: inherit; font-family: var(--font-mono); padding: 4px 6px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+  .budget .cap { font-family: var(--font-mono); color: var(--ink); font-weight: 500; }
+  h2.sec { font-family: var(--font-display); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px; color: var(--ink-2); margin: 22px 0 8px; text-wrap: balance; }
+  .list { display: grid; gap: 6px; }
+  .row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: center; width: 100%; text-align: left; font: inherit; color: inherit; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; cursor: pointer; }
+  .row:hover, .row:focus-visible { border-color: var(--accent); outline: none; }
+  .row .t { min-width: 0; }
+  .row .nm { font-weight: 600; overflow-wrap: anywhere; }
+  .row .meta { font-size: 12.5px; color: var(--ink-3); overflow-wrap: anywhere; }
+  .row .px { text-align: right; font-family: var(--font-mono); font-size: 13px; line-height: 1.35; font-variant-numeric: tabular-nums; }
+  .row .px small { display: block; color: var(--ink-3); font-family: var(--font-body); font-size: 11px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font: inherit; font-size: 13px; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--chip); color: var(--ink); cursor: pointer; }
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+  .empty { color: var(--ink-3); font-size: 14px; padding: 8px 2px; }
+  /* Slab label */
+  .slab { margin-top: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .label { border: 3px solid var(--label-red); border-radius: 8px; margin: 12px; padding: 10px 12px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; background: var(--label-bg); color: var(--label-ink); }
+  .label .l1 { font-family: var(--font-display); font-weight: 600; font-size: 14px; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.2; overflow-wrap: anywhere; }
+  .label .l2 { font-family: var(--font-display); font-weight: 700; font-size: 22px; text-transform: uppercase; line-height: 1.1; overflow-wrap: anywhere; }
+  .label .gr { text-align: right; font-family: var(--font-display); text-transform: uppercase; }
+  .label .gr span { display: block; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; }
+  .label .gr strong { display: block; font-size: 34px; line-height: 1; color: var(--label-red); }
+  .inner { padding: 0 14px 14px; display: grid; gap: 14px; }
+  .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .stats.one { grid-template-columns: minmax(0, 1fr); }
+  .stat { background: var(--bg); border-radius: 10px; padding: 10px; min-width: 0; }
+  .stat .k { font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); }
+  .stat .v { font-family: var(--font-mono); font-size: 18px; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+  .stat .s { font-size: 12px; color: var(--ink-3); }
+  .offer { display: grid; gap: 10px; border-top: 1px solid var(--line); padding-top: 14px; }
+  .askrow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .askrow label { font-weight: 600; }
+  .askrow input { width: 120px; font-family: var(--font-mono); font-size: 20px; padding: 8px 10px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); }
+  .askrow input:focus { outline: none; border-color: var(--accent); }
+  .targets { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 14px; color: var(--ink-2); }
+  .targets b { font-family: var(--font-mono); color: var(--ink); font-weight: 500; }
+  .verdict { border-radius: 10px; padding: 12px 14px; font-weight: 600; }
+  .verdict small { display: block; font-weight: 400; color: inherit; opacity: 0.9; margin-top: 2px; }
+  .v-good { background: var(--good-bg); color: var(--good); }
+  .v-warn { background: var(--warn-bg); color: var(--warn); }
+  .v-bad { background: var(--bad-bg); color: var(--bad); }
+  .v-none { background: var(--bg); color: var(--ink-2); }
+  .checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .checks li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; font-size: 14px; }
+  .checks .ic { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; }
+  .ic.ok { background: var(--good-bg); color: var(--good); }
+  .ic.wn { background: var(--warn-bg); color: var(--warn); }
+  .ic.no { background: var(--bad-bg); color: var(--bad); }
+  .sales { font-family: var(--font-mono); font-size: 13px; color: var(--ink-2); overflow-wrap: anywhere; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  .btn { font: inherit; font-size: 14px; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; text-decoration: none; }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .note { font-size: 13px; color: var(--ink-3); }
+  button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @media (prefers-reduced-motion: no-preference) { .slab { animation: in 0.18s ease-out; } @keyframes in { from { transform: translateY(4px); } to { transform: none; } } }
+</style>
+
+<div class="wrap">
+  <header class="bar">
+    <div class="brand">
+      <h1>Slab <b>Check</b></h1>
+      <div class="fresh" id="fresh"></div>
+    </div>
+    <div class="search">
+      <input id="q" type="search" inputmode="search" autocomplete="off" placeholder="Card name, number or set (e.g. umbreon 176)" aria-label="Search cards">
+    </div>
+    <div class="budget">
+      <label for="budget">Budget $<input id="budget" type="number" min="0" step="5" value="200"></label>
+      <label for="gift">Gift reserve $<input id="gift" type="number" min="0" step="5" value="40"></label>
+      <span>Slab cap <span class="cap" id="cap">$160</span></span>
+    </div>
+  </header>
+
+  <section id="results" aria-live="polite"></section>
+  <section id="detail"></section>
+
+  <section id="browse">
+    <h2 class="sec">Good slab targets in your budget</h2>
+    <p class="note">PSA 10s under your slab cap that sell at least twice a week, have held their price over the last month, and come from sets more than 6 months old.</p>
+    <div class="chips" id="tchips"></div>
+    <div class="list" id="targets"></div>
+
+    <h2 class="sec">Gift ideas for your niece</h2>
+    <p class="note">Raw Near Mint cards of favourite Pokémon, $8 to $40, from sets more than 6 months old so the price has settled.</p>
+    <div class="chips" id="gchips"></div>
+    <div class="list" id="gifts"></div>
+
+    <h2 class="sec" id="starredH" hidden>Your shortlist</h2>
+    <div class="list" id="starred"></div>
+  </section>
+</div>
+
+<script>
+const DATA = /*DATA*/null;
+const GRADE_NAMES = { psa10: 'PSA 10', psa9: 'PSA 9', psa8: 'PSA 8', cgc10: 'CGC 10', cgc9_5: 'CGC 9.5', bgs9_5: 'BGS 9.5', bgs10: 'BGS 10', tag10: 'TAG 10', ace10: 'ACE 10' };
+const KID_FAVES = ['pikachu', 'eevee', 'vaporeon', 'jolteon', 'flareon', 'espeon', 'umbreon', 'leafeon', 'glaceon', 'sylveon', 'charizard', 'charmander', 'squirtle', 'bulbasaur', 'mew', 'mewtwo', 'gengar', 'snorlax', 'jigglypuff', 'psyduck', 'togepi', 'lapras', 'dragonite', 'lucario', 'greninja', 'piplup', 'mimikyu', 'gardevoir', 'rayquaza', 'lugia', 'vulpix', 'ninetales', 'dragonair', 'dratini', 'slowpoke', 'clefairy', 'meowth', 'teddiursa', 'pichu', 'cyndaquil', 'totodile', 'chikorita', 'mudkip', 'torchic', 'treecko', 'sprigatito', 'fuecoco', 'quaxly', 'eevee', 'ditto', 'snom', 'wooper', 'pachirisu', 'emolga', 'dedenne', 'togekiss', 'alcremie'];
+const $ = (id) => document.getElementById(id);
+const money = (v) => v == null ? 'n/a' : '$' + (v >= 1000 ? Math.round(v).toLocaleString() : v.toFixed(v < 100 ? 2 : 0));
+const pct = (v) => v == null ? 'n/a' : (v > 0 ? '+' : '') + Math.round(v * 100) + '%';
+const round5 = (v) => Math.max(5, Math.round(v / 5) * 5);
+const today = new Date(DATA.scanned + 'T12:00:00Z');
+const daysSince = (d) => d ? Math.round((today - new Date(d + 'T12:00:00Z')) / 86400000) : null;
+
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('slabcheck:' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('slabcheck:' + k, JSON.stringify(v)); } catch (e) {} },
+};
+
+const cards = DATA.cards;
+for (const c of cards) c._s = (c.name + ' ' + c.set + ' ' + (c.num || '') + ' ' + (c.rarity || '')).toLowerCase();
+const byId = new Map(cards.map((c) => [c.id, c]));
+let starred = new Set(store.get('starred', []));
+let state = { id: null, grade: 'psa10' };
+
+function cap() {
+  const b = parseFloat($('budget').value) || 0, g = parseFloat($('gift').value) || 0;
+  return Math.max(0, b - g);
+}
+function newSet(c) { const d = daysSince(c.released); return d != null && d < 183; }
+function psa10(c) { return (c.grades || {}).psa10; }
+
+$('fresh').textContent = 'Prices as of ' + new Date(DATA.scanned + 'T12:00:00Z').toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) + ' · ' + cards.length.toLocaleString() + ' cards';
+$('budget').value = store.get('budget', 200);
+$('gift').value = store.get('gift', 40);
+
+function rowHtml(c, mode) {
+  const g = psa10(c);
+  const right = mode === 'gift'
+    ? `${money(c.raw)}<small>raw NM</small>`
+    : g && g.comp ? `${money(g.comp)}<small>PSA 10 · ${g.perWeek}/wk</small>` : `${money(c.raw)}<small>raw NM</small>`;
+  const star = starred.has(c.id) ? '★ ' : '';
+  return `<button class="row" data-id="${c.id}"><span class="t"><span class="nm">${star}${esc(c.name)}</span><span class="meta"> ${esc(c.set)} · #${esc(c.num || '?')}${c.rarity ? ' · ' + esc(c.rarity) : ''}</span></span><span class="px">${right}</span></button>`;
+}
+function esc(s) { return String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]); }
+function bindRows(el) { el.querySelectorAll('.row').forEach((b) => b.addEventListener('click', () => select(b.dataset.id))); }
+
+function search(q) {
+  const toks = q.toLowerCase().split(/\s+/).filter(Boolean);
+  if (!toks.length) { $('results').innerHTML = ''; return; }
+  const hits = [];
+  for (const c of cards) {
+    if (toks.every((t) => c._s.includes(t))) {
+      const g = psa10(c);
+      const score = (c.name.toLowerCase().startsWith(toks[0]) ? 1000 : 0) + (g ? g.n30 * 5 : 0) + Math.min(c.raw || 0, 200) / 10;
+      hits.push([score, c]);
+    }
+  }
+  hits.sort((a, b) => b[0] - a[0]);
+  const top = hits.slice(0, 30).map((h) => h[1]);
+  $('results').innerHTML = `<h2 class="sec">${hits.length ? hits.length.toLocaleString() + ' match' + (hits.length === 1 ? '' : 'es') + (hits.length > 30 ? ', showing 30' : '') : 'No matches'}</h2>` +
+    (top.length ? `<div class="list">${top.map((c) => rowHtml(c)).join('')}</div>` : `<p class="empty">Try fewer words, or just the card number (for example "176"). The list covers English cards worth $5 to $150 raw.</p>`);
+  bindRows($('results'));
+}
+
+function gradeView(c, key) {
+  if (key === 'raw') return { comp: c.raw, n30: null, perWeek: null, trend: null, last5: [], lastSale: null, raw: true };
+  return c.grades[key];
+}
+
+function verdict(ask, comp, maxOffer, great) {
+  if (!ask) return { cls: 'v-none', text: 'Type the asking price to get a verdict.', sub: '' };
+  if (ask <= great) return { cls: 'v-good', text: 'Great buy', sub: `${Math.round(ask / comp * 100)}% of recent sales. Take it.` };
+  if (ask <= maxOffer) return { cls: 'v-good', text: 'Fair price, OK to buy', sub: `${Math.round(ask / comp * 100)}% of recent sales, under your max of ${money(maxOffer)}.` };
+  if (ask <= comp) return { cls: 'v-warn', text: `Over your max. Counter at ${money(round5(great))}, walk above ${money(maxOffer)}`, sub: `${Math.round(ask / comp * 100)}% of recent sales. Dealers expect a counter.` };
+  return { cls: 'v-bad', text: 'Above recent sales. Walk away', sub: `${Math.round(ask / comp * 100)}% of what it has actually sold for. Online would be cheaper.` };
+}
+
+function checks(c, key, g, ask) {
+  const out = [];
+  if (key !== 'raw') {
+    if (g.n30 >= 3) out.push(['ok', `Recent sold comps: ${g.n30} sales in the last 30 days, averaging ${money(g.comp)}.`]);
+    else if (g.comp) out.push(['wn', `Thin comps: only ${g.n30} sale${g.n30 === 1 ? '' : 's'} in 30 days. The ${money(g.comp)} figure leans on older sales, so check eBay sold listings before paying.`]);
+    else out.push(['no', 'No reliable sold comps for this grade. Do not buy without checking eBay sold listings.']);
+    if (g.perWeek >= 2) out.push(['ok', `Sells ${g.perWeek} times a week, so it is easy to resell.`]);
+    else if (g.perWeek >= 0.5) out.push(['wn', `Sells about ${g.perWeek} times a week. Resale could take a while.`]);
+    else out.push(['no', `Rarely sells (${g.perWeek} a week). Hard to resell at this price.`]);
+    if (g.trend == null) out.push(['wn', 'Not enough sales to tell the price trend.']);
+    else if (g.trend <= -0.1) out.push(['no', `Falling: last 30 days are ${pct(g.trend)} vs the 60 days before. Pay less, or skip.`]);
+    else if (g.trend < -0.03) out.push(['wn', `Slipping: ${pct(g.trend)} vs the 60 days before.`]);
+    else if (g.trend >= 0.05) out.push(['ok', `Rising: ${pct(g.trend)} vs the 60 days before. Sellers may ask above the average, so lean on recent sales.`]);
+    else out.push(['ok', `Holding steady: ${pct(g.trend)} vs the 60 days before.`]);
+    const d = daysSince(g.lastSale);
+    if (d != null && d > 21) out.push(['wn', `Last recorded sale was ${d} days ago.`]);
+    if (key === 'psa10' && c.raw) {
+      const mult = g.comp / c.raw;
+      const p9 = c.grades.psa9;
+      let txt = `A PSA 10 sells for ${mult.toFixed(1)}x a raw copy (${money(c.raw)}).`;
+      if (p9 && p9.comp && p9.comp < c.raw) txt += ` A PSA 9 (${money(p9.comp)}) sells for less than raw, so only 10s are worth grading.`;
+      out.push([mult < 1.3 ? 'wn' : 'ok', txt]);
+    }
+  } else {
+    out.push(['ok', `TCGplayer market price for a Near Mint copy is ${money(c.raw)}${c.listings ? `, with ${c.listings} listed online` : ''}. Check the corners, edges and surface before paying.`]);
+  }
+  if (newSet(c)) out.push(['no', `New set (released ${c.released}). Prices usually keep falling for 3 to 6 months after release, and PSA 10s drop as more get graded.`]);
+  if (ask && ask > cap()) out.push(['no', `Over your slab cap of ${money(cap())} (budget minus gift reserve).`]);
+  return out;
+}
+
+function renderDetail() {
+  const c = byId.get(state.id);
+  if (!c) { $('detail').innerHTML = ''; return; }
+  const keys = Object.keys(GRADE_NAMES).filter((k) => c.grades[k] && c.grades[k].comp);
+  if (!keys.includes(state.grade)) state.grade = keys[0] || 'raw';
+  const tabs = [...keys, 'raw'];
+  const g = gradeView(c, state.grade);
+  const comp = g.comp;
+  const trendCut = g.trend != null && g.trend <= -0.1 ? 0.8 : 0.85;
+  const maxOffer = comp ? comp * trendCut : null;
+  const great = comp ? comp * 0.75 : null;
+  const askVal = parseFloat(store.get('ask:' + c.id + ':' + state.grade, '')) || null;
+  const v = comp ? verdict(askVal, comp, maxOffer, great) : { cls: 'v-none', text: 'No price data for this grade.', sub: '' };
+  const year = c.released ? c.released.slice(0, 4) : '';
+  const gradeLabel = state.grade === 'raw' ? 'Raw' : GRADE_NAMES[state.grade];
+  const [co, gr] = gradeLabel.split(' ');
+  $('detail').innerHTML = `
+    <article class="slab" aria-label="${esc(c.name)} details">
+      <div class="label">
+        <div><div class="l1">${esc(year)} Pokémon ${esc(c.set)} #${esc(c.num || '')}</div><div class="l2">${esc(c.name)}</div><div class="l1">${esc(c.rarity || '')}${c.printing ? ' · ' + esc(c.printing) : ''}</div></div>
+        <div class="gr"><span>${esc(co)}</span><strong>${esc(gr || 'NM')}</strong></div>
+      </div>
+      <div class="inner">
+        <div class="chips" role="group" aria-label="Grade">${tabs.map((k) => `<button class="chip" data-g="${k}" aria-pressed="${k === state.grade}">${k === 'raw' ? 'Raw NM' : GRADE_NAMES[k]}</button>`).join('')}</div>
+        <div class="stats${g.raw ? ' one' : ''}">
+          <div class="stat"><div class="k">${g.raw ? 'Market price' : 'Recent sales avg'}</div><div class="v">${money(comp)}</div><div class="s">${g.raw ? 'TCGplayer, Near Mint' : g.n30 >= 3 ? `last 30 days, ${money(g.low30)} to ${money(g.high30)}` : 'few recent sales'}</div></div>
+          ${g.raw ? '' : `<div class="stat"><div class="k">Sales / week</div><div class="v">${g.perWeek}</div><div class="s">${g.n30} in 30 days</div></div>
+          <div class="stat"><div class="k">Trend</div><div class="v">${pct(g.trend)}</div><div class="s">30 days vs 60 before</div></div>`}
+        </div>
+        ${g.last5 && g.last5.length ? `<div class="sales">Last 5 days with sales (average price that day): ${g.last5.map(money).join(' · ')}${g.lastSale ? `. Latest sale ${g.lastSale}` : ''}</div>` : ''}
+        <div class="offer">
+          <div class="askrow"><label for="ask">Asking price $</label><input id="ask" type="number" inputmode="decimal" min="0" step="1" value="${askVal ?? ''}"></div>
+          ${comp ? `<div class="targets"><span>Open at <b>${money(round5(great))}</b></span><span>Max <b>${money(maxOffer)}</b>${trendCut < 0.85 ? ' (80%, price is falling)' : ' (85%)'}</span><span>Recent avg <b>${money(comp)}</b></span></div>` : ''}
+          <div class="verdict ${v.cls}" id="verdict">${esc(v.text)}${v.sub ? `<small>${esc(v.sub)}</small>` : ''}</div>
+          <ul class="checks" id="checks">${checks(c, state.grade, g, askVal).map(([k, t]) => `<li><span class="ic ${k}">${k === 'ok' ? '✓' : k === 'wn' ? '!' : '✕'}</span><span>${esc(t)}</span></li>`).join('')}</ul>
+        </div>
+        <div class="actions">
+          <button class="btn primary" id="star">${starred.has(c.id) ? 'Remove from shortlist' : 'Add to shortlist'}</button>
+          <a class="btn" href="https://www.tcgplayer.com/product/${encodeURIComponent(c.id)}" target="_blank" rel="noopener">Open on TCGplayer</a>
+          <button class="btn" id="close">Close</button>
+        </div>
+      </div>
+    </article>`;
+  $('detail').querySelectorAll('[data-g]').forEach((b) => b.addEventListener('click', () => { state.grade = b.dataset.g; renderDetail(); }));
+  const ask = $('ask');
+  ask.addEventListener('input', () => {
+    store.set('ask:' + c.id + ':' + state.grade, ask.value);
+    const a = parseFloat(ask.value) || null;
+    const vv = comp ? verdict(a, comp, maxOffer, great) : v;
+    $('verdict').className = 'verdict ' + vv.cls;
+    $('verdict').innerHTML = esc(vv.text) + (vv.sub ? `<small>${esc(vv.sub)}</small>` : '');
+    $('checks').innerHTML = checks(c, state.grade, g, a).map(([k, t]) => `<li><span class="ic ${k}">${k === 'ok' ? '✓' : k === 'wn' ? '!' : '✕'}</span><span>${esc(t)}</span></li>`).join('');
+  });
+  $('star').addEventListener('click', () => {
+    starred.has(c.id) ? starred.delete(c.id) : starred.add(c.id);
+    store.set('starred', [...starred]);
+    renderDetail(); renderStarred();
+  });
+  $('close').addEventListener('click', () => { state.id = null; renderDetail(); });
+}
+
+function select(id, quiet) {
+  state.id = id; state.grade = 'psa10';
+  renderDetail();
+  if (quiet) return;
+  $('detail').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+}
+
+let tFilter = store.get('tFilter', 'cap');
+function renderTargets() {
+  const limit = tFilter === '100' ? 100 : cap();
+  const rows = cards.filter((c) => {
+    const g = psa10(c);
+    return g && g.comp && g.comp <= limit && g.comp >= 30 && g.perWeek >= 2 && g.trend != null && g.trend > -0.05 && !newSet(c) && (daysSince(g.lastSale) ?? 99) <= 14;
+  }).sort((a, b) => psa10(b).perWeek - psa10(a).perWeek).slice(0, 40);
+  $('tchips').innerHTML = [['cap', `Under ${money(cap())}`], ['100', 'Under $100']].map(([k, t]) => `<button class="chip" data-t="${k}" aria-pressed="${k === tFilter}">${t}</button>`).join('');
+  $('tchips').querySelectorAll('[data-t]').forEach((b) => b.addEventListener('click', () => { tFilter = b.dataset.t; store.set('tFilter', tFilter); renderTargets(); }));
+  $('targets').innerHTML = rows.length ? rows.map((c) => rowHtml(c)).join('') : '<p class="empty">Nothing matches at this cap. Raise the budget or lower the gift reserve.</p>';
+  bindRows($('targets'));
+}
+
+let gFilter = store.get('gFilter', 'all');
+function renderGifts() {
+  const max = gFilter === '20' ? 20 : 40;
+  const rows = cards.filter((c) => {
+    if (!c.raw || c.raw < 8 || c.raw > max || newSet(c)) return false;
+    const n = c.name.toLowerCase();
+    return KID_FAVES.some((p) => n.split(/[^a-z]+/).includes(p));
+  }).sort((a, b) => ((psa10(b) || {}).n30 || 0) - ((psa10(a) || {}).n30 || 0) || b.raw - a.raw).slice(0, 30);
+  $('gchips').innerHTML = [['all', '$8 to $40'], ['20', 'Under $20']].map(([k, t]) => `<button class="chip" data-gf="${k}" aria-pressed="${k === gFilter}">${t}</button>`).join('');
+  $('gchips').querySelectorAll('[data-gf]').forEach((b) => b.addEventListener('click', () => { gFilter = b.dataset.gf; store.set('gFilter', gFilter); renderGifts(); }));
+  $('gifts').innerHTML = rows.map((c) => rowHtml(c, 'gift')).join('');
+  bindRows($('gifts'));
+}
+
+function renderStarred() {
+  const rows = [...starred].map((id) => byId.get(id)).filter(Boolean);
+  $('starredH').hidden = !rows.length;
+  $('starred').innerHTML = rows.map((c) => rowHtml(c)).join('');
+  bindRows($('starred'));
+}
+
+function onBudget() {
+  store.set('budget', $('budget').value); store.set('gift', $('gift').value);
+  $('cap').textContent = money(cap());
+  renderTargets();
+  if (state.id) renderDetail();
+}
+$('budget').addEventListener('input', onBudget);
+$('gift').addEventListener('input', onBudget);
+let qt;
+$('q').addEventListener('input', (e) => { clearTimeout(qt); qt = setTimeout(() => search(e.target.value), 120); });
+
+$('cap').textContent = money(cap());
+renderTargets(); renderGifts(); renderStarred();
+const firstTarget = $('targets').querySelector('.row');
+if (firstTarget) select(firstTarget.dataset.id, true);
+</script>
